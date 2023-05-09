@@ -32,7 +32,7 @@
     perm = query.get('perm') ?? query.get('p') ?? '8';
     scope = query.get('scope') ?? query.get('s') ?? 'bot applications.commands';
     if (id && perm && scope) {
-      goto(getLink(id, perm, scope));
+      window.location.replace(getLink(id, perm, scope));
       rediring = true;
     }
     loaded = true;
