@@ -21,11 +21,13 @@
       ours ? (perm === '8' ? '' : getPerm(perm, ours)) : getPerm(perm, ours)
     }${
       ours
-        ? scope === 'bot application.commands'
+        ? scope === 'bot applications.commands' ||
+          scope === 'bot%20applications.commands'
           ? ''
           : getScope(scope, ours)
         : getScope(scope, ours)
     }`;
+  let err: string | undefined = undefined;
   onMount(() => {
     const query = new URLSearchParams(window.location.search);
     id = query.get('id') ?? '';
@@ -37,6 +39,14 @@
     }
     loaded = true;
   });
+  $: {
+    if (!id) err = 'No Client ID';
+    else if (isNaN(Number(id))) err = 'Client ID is not a number';
+    else if (Number(id) < 1000000000) err = 'Client ID is wayy too small';
+    else if (isNaN(Number(perm)) && perm)
+      err = 'Client Permissions is not a number';
+    else err = undefined;
+  }
 </script>
 
 <svelte:head>
@@ -61,13 +71,13 @@
       <span>Client Scope</span>
       <input type="text" bind:value={scope} placeholder="Client Scope" />
       <div style="margin-bottom:8px;" />
-      {#if id}
+      {#if id && !err}
         <a href={getLink(id, perm, scope, true)} target="_blank"
           >{getLink(id, perm, scope, true)}</a
         >
       {:else}
         <p style="display: inline-block;margin: 0 0;color: #faa">
-          No Client ID
+          {err ?? 'Unknown Error'}
         </p>
       {/if}
     {/if}
