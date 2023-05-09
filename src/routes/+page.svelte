@@ -10,7 +10,7 @@
     `&${ours ? 'p' : 'permissions'}=${encodeURIComponent(perm)}`;
   const getScope = (scope: string, ours: boolean) =>
     `&${ours ? 's' : 'scope'}=${encodeURIComponent(scope)}`;
-  const getLink = (
+  const rawGetLink = (
     id: string,
     perm: string = '8',
     scope: string = 'bot applications.commands',
@@ -32,6 +32,18 @@
           : getScope(scope, ours)
         : getScope(scope, ours)
     }`;
+  const getLink = (
+    id: string,
+    perm: string = '8',
+    scope: string = 'bot applications.commands',
+    ours = false
+  ) =>
+    rawGetLink(
+      id,
+      perm ?? '8',
+      scope ?? 'bot applications.commands',
+      ours ?? false
+    );
   let err: string | undefined = undefined;
   onMount(() => {
     const query = new URLSearchParams(window.location.search);
