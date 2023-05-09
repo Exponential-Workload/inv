@@ -3,14 +3,19 @@
   import { onMount } from 'svelte';
 
   // get params 'id', 'perm' and 'scope' from query
-  let id: string, perm: string, scope: string;
+  let id: string, perm: string | undefined, scope: string | undefined;
   let loaded = false;
   let rediring = false;
   const getPerm = (perm: string, ours: boolean) =>
     `&${ours ? 'p' : 'permissions'}=${encodeURIComponent(perm)}`;
   const getScope = (scope: string, ours: boolean) =>
     `&${ours ? 's' : 'scope'}=${encodeURIComponent(scope)}`;
-  const getLink = (id: string, perm: string, scope: string, ours = false) =>
+  const getLink = (
+    id: string,
+    perm: string = '8',
+    scope: string = 'bot applications.commands',
+    ours = false
+  ) =>
     `${
       ours
         ? `${window.location.protocol}//${
@@ -31,10 +36,12 @@
   onMount(() => {
     const query = new URLSearchParams(window.location.search);
     id = query.get('id') ?? '';
-    perm = query.get('perm') ?? query.get('p') ?? '8';
-    scope = query.get('scope') ?? query.get('s') ?? 'bot applications.commands';
-    if (id && perm && scope) {
-      window.location.replace(getLink(id, perm, scope));
+    perm = query.get('perm') ?? query.get('p') ?? undefined;
+    scope = query.get('scope') ?? query.get('s') ?? undefined;
+    if (id) {
+      window.location.replace(
+        getLink(id, perm ?? '8', scope ?? 'bot applications.commands')
+      );
       rediring = true;
     }
     loaded = true;
