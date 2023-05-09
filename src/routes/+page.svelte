@@ -40,7 +40,7 @@
 </script>
 
 <svelte:head>
-  <title>/</title>
+  <title>bot invite</title>
   <meta name="description" content="bot stuff" />
 </svelte:head>
 
