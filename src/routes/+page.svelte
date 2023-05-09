@@ -63,13 +63,13 @@
       <input type="text" bind:value={id} placeholder="1105363089047695328" /><br
       />
       <span>Bot Permissions</span>
-      <input
-        type="number"
-        bind:value={perm}
-        placeholder="Client Permissions"
-      /><br />
+      <input type="number" bind:value={perm} placeholder="8" /><br />
       <span>Client Scope</span>
-      <input type="text" bind:value={scope} placeholder="Client Scope" />
+      <input
+        type="text"
+        bind:value={scope}
+        placeholder="bot applications.commands"
+      />
       <div style="margin-bottom:8px;" />
       {#if id && !err}
         <a href={getLink(id, perm, scope, true)} target="_blank"
