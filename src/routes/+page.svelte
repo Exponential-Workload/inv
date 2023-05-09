@@ -62,7 +62,7 @@
       <input type="text" bind:value={scope} placeholder="Client Scope" />
       <div style="margin-bottom:8px;" />
       {#if id}
-        <a href={getLink(id, perm, scope, true)}
+        <a href={getLink(id, perm, scope, true)} target="_blank"
           >{getLink(id, perm, scope, true)}</a
         >
       {:else}
